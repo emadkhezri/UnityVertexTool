@@ -1,57 +1,69 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿namespace com.emadkhezri.vertextool
+{
+    using UnityEditor;
+    using UnityEngine;
 
-public class VertexToolSceneManager {
-    VertexProcessor _vertexProcessor;
-    VertexToolData _data;
-
-    public VertexToolSceneManager(VertexToolData data)
+    public class VertexToolSceneManager
     {
-        _data = data;
-        _vertexProcessor = new VertexProcessor(_data);
-    }
+        VertexProcessor _vertexProcessor;
+        VertexToolData _data;
 
-    public void OnSceneGUI(SceneView sceneView)
-    {
-        if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
+        public VertexToolSceneManager(VertexToolData data)
         {
-            Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
-            RaycastHit hit;
-            if (Physics.Raycast(ray, out hit, 1000))
+            _data = data;
+            _vertexProcessor = new VertexProcessor(_data);
+        }
+
+        public void OnSceneGUI(SceneView sceneView)
+        {
+            if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
             {
-                _data.selectedObjectName = hit.transform.name;
-                _data.meshFilter = hit.transform.GetComponent<MeshFilter>();
-                if (_data.meshFilter != null)
+                Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 1000))
                 {
-                    _data.isVertexSelected = true;
-                    _vertexProcessor.ProcessSelected(hit.point);
-                    return;
+                    _data.meshFilter = GetMeshFilter(hit.transform);
+                    _data.selectedObjectName = _data.meshFilter.name;
+                    if (_data.meshFilter != null)
+                    {
+                        _data.isVertexSelected = true;
+                        _vertexProcessor.ProcessSelected(hit.point);
+                        return;
+                    }
+                    _data.isVertexSelected = false;
                 }
-                _data.isVertexSelected = false;
+                else
+                {
+                    _data.isVertexSelected = false;
+                    _data.selectedObjectName = VertexToolData.NO_OBJECT_SELECTED;
+                    _data.meshFilter = null;
+                }
+                _vertexProcessor.Clean();
             }
-            else
+
+            if (_data.isVertexSelected)
             {
-                _data.isVertexSelected = false;
-                _data.selectedObjectName = VertexToolData.NO_OBJECT_SELECTED;
-                _data.meshFilter = null;
+                var disPosition = _data.vertexPosition + _data.meshFilter.transform.position;
+                Handles.Label(disPosition, "Selected Vertex");
+                Handles.color = _data.normalArrowColor;
+                Handles.ArrowHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.normalArrowSize, Event.current.type);
+                Handles.color = _data.solidDiskColor;
+                Handles.DrawSolidDisc(disPosition, _data.vertexNormal, _data.solidDiskSize);
+                Handles.color = _data.selectedVertexColor;
+                Handles.SphereHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.selectedVertexSize, Event.current.type);
             }
-            _vertexProcessor.Clean();
         }
 
-        if (_data.isVertexSelected)
+
+        private MeshFilter GetMeshFilter(Transform transform)
         {
-            var disPosition = _data.vertexPosition + _data.meshFilter.transform.position;
-            Handles.Label(disPosition, "Selected Vertex");
-            Handles.color = _data.normalArrowColor;
-            Handles.ArrowHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.normalArrowSize, Event.current.type);
-            Handles.color = _data.solidDiskColor;
-            Handles.DrawSolidDisc(disPosition, _data.vertexNormal, _data.solidDiskSize);
-            Handles.color = _data.selectedVertexColor;
-            Handles.SphereHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.selectedVertexSize, Event.current.type);
-        }
-        else
-        {
-            Vector2 mousePosition = Event.current.mousePosition;
+            MeshFilter meshFilter = transform.GetComponentInChildren<MeshFilter>();
+            while (meshFilter == null && transform.parent != null)
+            {
+                meshFilter = GetMeshFilter(transform.parent);
+            }
+            return meshFilter;
         }
     }
+
 }
