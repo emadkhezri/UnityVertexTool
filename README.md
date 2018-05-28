@@ -1,6 +1,5 @@
 # UnityVertexTool
 A handy tool for Unity3D which gives you information about the vertex data on a mesh. 
-# Project Title
 Vertex Tool is a tool in Unity game engine which enables developers to debug the vertex data more easily and makes them to have acess to all this information through a simple UI. 
 
 ## Getting Started
