@@ -6,11 +6,11 @@
     public class VertexToolWindow : EditorWindow
     {
         VertexToolData _data = new VertexToolData();
-        VertexInfoPanel _infoPanel;
+        public VertexInfoPanel _infoPanel;
         VertexToolSettingsPanel _settingsPanel;
         VertexToolSceneManager _sceneManager;
 
-        [MenuItem("ItCameFromEarth/Windows/Vertex Tool")]
+        [MenuItem("Window/Vertex Tool")]
         public static void ShowVertexInfo()
         {
             VertexToolWindow vertexInfoWindow = CreateInstance<VertexToolWindow>();

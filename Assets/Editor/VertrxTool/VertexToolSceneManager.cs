@@ -43,18 +43,17 @@
 
             if (_data.isVertexSelected)
             {
-                var disPosition = _data.vertexPosition + _data.meshFilter.transform.position;
+                var disPosition = _data.VertexData.Position + _data.meshFilter.transform.position;
                 Handles.Label(disPosition, "Selected Vertex");
                 Handles.color = _data.normalArrowColor;
-                Handles.ArrowHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.normalArrowSize, Event.current.type);
+                Handles.ArrowHandleCap(0, disPosition, Quaternion.LookRotation(_data.VertexData.Normal), _data.normalArrowSize, Event.current.type);
                 Handles.color = _data.solidDiskColor;
-                Handles.DrawSolidDisc(disPosition, _data.vertexNormal, _data.solidDiskSize);
+                Handles.DrawSolidDisc(disPosition, _data.VertexData.Normal, _data.solidDiskSize);
                 Handles.color = _data.selectedVertexColor;
-                Handles.SphereHandleCap(0, disPosition, Quaternion.LookRotation(_data.vertexNormal), _data.selectedVertexSize, Event.current.type);
+                Handles.SphereHandleCap(0, disPosition, Quaternion.LookRotation(_data.VertexData.Normal), _data.selectedVertexSize, Event.current.type);
             }
         }
-
-
+        
         private MeshFilter GetMeshFilter(Transform transform)
         {
             MeshFilter meshFilter = transform.GetComponentInChildren<MeshFilter>();

@@ -15,15 +15,16 @@
         public void Clean()
         {
             _data.vertexCount = 0;
-            _data.vertexIndex = 0;
-            _data.vertexPosition = Vector3.zero;
-            _data.vertexNormal = Vector3.zero;
-            _data.vertexTangent = Vector3.zero;
-            _data.vertexColor = Color.clear;
-            _data.vertexUV = Vector3.zero;
-            _data.vertexUV2 = Vector3.zero;
-            _data.vertexUV3 = Vector3.zero;
-            _data.vertexUV4 = Vector3.zero;
+            _data.subMeshCount = 0;
+            _data.VertexData.Index = 0;
+            _data.VertexData.Position = Vector3.zero;
+            _data.VertexData.Normal = Vector3.zero;
+            _data.VertexData.Tangent = Vector3.zero;
+            _data.VertexData.Color = Color.clear;
+            _data.VertexData.UV = Vector3.zero;
+            _data.VertexData.UV2 = Vector3.zero;
+            _data.VertexData.UV3 = Vector3.zero;
+            _data.VertexData.UV4 = Vector3.zero;
             EditorWindow.GetWindow<VertexToolWindow>().Repaint();
         }
 
@@ -31,24 +32,29 @@
         {
             Mesh mesh = _data.meshFilter.sharedMesh;
             _data.vertexCount = mesh.vertices.Length;
-            _data.vertexIndex = findSelectedVertexIndex(mesh.vertices, hitPoint - _data.meshFilter.transform.position);
-            _data.vertexPosition = mesh.vertices[_data.vertexIndex];
-            _data.vertexNormal = mesh.normals[_data.vertexIndex];
-            _data.vertexTangent = mesh.tangents[_data.vertexIndex];
-            if (_data.vertexIndex < mesh.colors.Length)
-                _data.vertexColor = mesh.colors[_data.vertexIndex];
+            _data.subMeshCount = mesh.subMeshCount;
+            _data.IndexFormat = mesh.indexFormat;
+            var currentSelectedVertex = _data.VertexData.Index;
+            _data.VertexData.Index = findSelectedVertexIndex(mesh.vertices, hitPoint - _data.meshFilter.transform.position);
+            if (currentSelectedVertex == _data.VertexData.Index)
+                return;
+            _data.VertexData.Position = mesh.vertices[_data.VertexData.Index];
+            _data.VertexData.Normal = mesh.normals[_data.VertexData.Index];
+            _data.VertexData.Tangent = mesh.tangents[_data.VertexData.Index];
+            if (_data.VertexData.Index < mesh.colors.Length)
+                _data.VertexData.Color = mesh.colors[_data.VertexData.Index];
 
-            if (_data.vertexIndex < mesh.uv.Length)
-                _data.vertexUV = mesh.uv[_data.vertexIndex];
+            if (_data.VertexData.Index < mesh.uv.Length)
+                _data.VertexData.UV = mesh.uv[_data.VertexData.Index];
 
-            if (_data.vertexIndex < mesh.uv2.Length)
-                _data.vertexUV2 = mesh.uv2[_data.vertexIndex];
+            if (_data.VertexData.Index < mesh.uv2.Length)
+                _data.VertexData.UV2 = mesh.uv2[_data.VertexData.Index];
 
-            if (_data.vertexIndex < mesh.uv3.Length)
-                _data.vertexUV3 = mesh.uv3[_data.vertexIndex];
+            if (_data.VertexData.Index < mesh.uv3.Length)
+                _data.VertexData.UV3 = mesh.uv3[_data.VertexData.Index];
 
-            if (_data.vertexIndex < mesh.uv4.Length)
-                _data.vertexUV4 = mesh.uv4[_data.vertexIndex];
+            if (_data.VertexData.Index < mesh.uv4.Length)
+                _data.VertexData.UV4 = mesh.uv4[_data.VertexData.Index];
 
             EditorWindow.GetWindow<VertexToolWindow>().Repaint();
         }
