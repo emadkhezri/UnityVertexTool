@@ -1,7 +1,7 @@
 # UnityVertexTool
-A handy tool for Unity3D which gives you information about the vertex data on a mesh. 
-Vertex Tool is a tool in Unity game engine which enables developers to debug the vertex data more easily and makes them to have acess to all this information through a simple UI. 
-<img src="ScreenShots/VertexToolScreenShot.PNG" alt="Mountain View">
+A handy tool for Unity3D which gives you information about the vertex data on a mesh. Vertex Tool is a tool in Unity game engine which enables developers to debug the vertex data more easily and makes them have access to all this information through a simple UI. 
+
+<img src="ScreenShots/VertexToolScreenShot.PNG" alt="Vertex Tool">
 ## Getting Started
 
 After installing the tool you can have access to it through the Unity Window menu. If you open the Vertex Tool window you can easily select any vertex on the mesh object that has a collider. the selected vertex would be highlighted and normal of vertex displays. the window has a section which gives you information like index, position, normals, tangents, colors and ... about the selected vertex. the other section is the settings for the vertex tools which includes normal arrow and selected vertex colour and size.
