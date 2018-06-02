@@ -58,12 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexProcessor.cs" />
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexToolData.cs" />
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexToolInfoPanel.cs" />
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexToolSceneManager.cs" />
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexToolSettingsPanel.cs" />
-    <Compile Include="Assets\SimpleVertrxTool\Editor\VertexToolWindow.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexProcessor.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexToolData.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexToolInfoPanel.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexToolSceneManager.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexToolSettingsPanel.cs" />
+    <Compile Include="Assets\SimpleVertrxTools\Editor\VertexToolWindow.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/Ekhez/UnityVertexTool/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>
