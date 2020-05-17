@@ -23,12 +23,12 @@
             _infoPanel = new VertexInfoPanel(_data);
             _settingsPanel = new VertexToolSettingsPanel(_data);
             _sceneManager = new VertexToolSceneManager(_data);
-            SceneView.onSceneGUIDelegate += _sceneManager.OnSceneGUI;
+            SceneView.duringSceneGui += _sceneManager.OnSceneGUI;
         }
 
         private void OnDisable()
         {
-            SceneView.onSceneGUIDelegate -= _sceneManager.OnSceneGUI;
+            SceneView.duringSceneGui -= _sceneManager.OnSceneGUI;
         }
 
         private void OnGUI()
